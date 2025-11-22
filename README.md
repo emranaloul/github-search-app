@@ -23,7 +23,7 @@ A modern Next.js application for searching GitHub users and repositories with in
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/emranaloul/github-search-app
 cd github-search-app
 ```
 

@@ -4,7 +4,9 @@ export async function githubFetch(url: string, options: RequestInit = {}) {
   const res = await fetch(url, {
     ...options,
     headers: {
-      Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+      Authorization: process.env.GITHUB_TOKEN
+        ? `Bearer ${process.env.GITHUB_TOKEN}`
+        : '',
       Accept: 'application/vnd.github.v3+json',
       ...options.headers,
     },

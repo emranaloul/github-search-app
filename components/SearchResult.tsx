@@ -4,9 +4,10 @@ import { useEffect } from 'react';
 import { useSearchContext } from '@/context/SearchContext';
 import { useGithubSearch } from '@/hooks/useGithubSearch';
 import { GitHubRepository, GitHubUser } from '@/types/common';
-import { Loader2, SearchX } from 'lucide-react';
 import ReposContainer from './ReposContainer';
 import UsersContainer from './UsersContainer';
+import NoResultsFound from './NoResultsFound';
+import Loader from './Loader';
 
 const SearchResult = () => {
   const { searchQuery, searchType } = useSearchContext();
@@ -32,11 +33,7 @@ const SearchResult = () => {
   }, [isValidating, hasReachedEnd, size, setSize]);
 
   if (isValidating && !data) {
-    return (
-      <div className='flex items-center justify-center h-full w-full'>
-        <Loader2 className='h-8 w-8 animate-spin text-muted-foreground' />
-      </div>
-    );
+    return <Loader />;
   }
   if (!data) {
     return null;
@@ -45,12 +42,7 @@ const SearchResult = () => {
   const allItems = data.flatMap((page) => page.items);
 
   if (allItems.length === 0) {
-    return (
-      <div className='flex flex-col items-center justify-center mt-4 mx-auto'>
-        <SearchX className='mx-auto mb-4 h-12 w-12 text-muted-foreground' />
-        <p className='text-muted-foreground'>No {searchType} results found.</p>
-      </div>
-    );
+    return <NoResultsFound searchType={searchType} />;
   }
   return (
     <>
@@ -63,12 +55,7 @@ const SearchResult = () => {
       ) : (
         <ReposContainer data={allItems as GitHubRepository[]} />
       )}
-      {isValidating && (
-        <div className='flex items-center justify-center mt-4 w-full'>
-          <Loader2 className='h-6 w-6 animate-spin text-muted-foreground' />
-          &nbsp; loading more...
-        </div>
-      )}
+      {isValidating && <Loader text='loading more...' />}
     </>
   );
 };
