@@ -56,6 +56,11 @@ const SearchResult = () => {
         <ReposContainer data={allItems as GitHubRepository[]} />
       )}
       {isValidating && <Loader text='loading more...' />}
+      {hasReachedEnd && (
+        <p className='text-center text-sm text-muted-foreground my-4 mx-auto'>
+          You have reached the end of the results.
+        </p>
+      )}
     </>
   );
 };
