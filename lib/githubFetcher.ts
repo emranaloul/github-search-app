@@ -1,6 +1,5 @@
 'use server';
 export async function githubFetch(url: string, options: RequestInit = {}) {
-  console.log('🚀 ~ githubFetch ~ url:', url);
   const res = await fetch(url, {
     ...options,
     headers: {
